@@ -3,10 +3,10 @@ package com.devinhartzell.randomlocationfinder;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
-public class DotList extends JPanel {
+public class DotList extends JTextArea {
 	
 	/**
 	 * 
@@ -27,11 +27,23 @@ public class DotList extends JPanel {
 	}
 
 	public void addItem(DotListItem item) {
-		items.add(item.index, item);
+		items.add(item.index-1, item);
+		append(item.toString() + "\n");
+		repaint(); revalidate();
 	}
 	
 	public void removeItem(int index) {
 		
+	}
+	
+	public void removeLast() {
+		if (items.size() != 0)
+			if (getText().contains(String.valueOf(items.size()))) {	
+				setText(getText().substring(0, getText().indexOf(String.valueOf(items.size()) + ".")));
+				items.remove(items.size()-1);
+				RandomLocationFinder.getPanel().repaint();
+			}
+			
 	}
 	
 	public static ArrayList<DotListItem> getDotList() {
